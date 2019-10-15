@@ -9,13 +9,13 @@ import threading
 from pynput.keyboard import Key, Controller
 
 class BPMPlayer(threading.Thread):
-    def __init__(self, click_file, clack_file, bpm, bpb):
+    def __init__(self, click_file, clack_file, bpm, bpb, vol):
         threading.Thread.__init__(self)
         self.load_wav(click_file, clack_file)
         self.bpm = bpm
         self.bpb = bpb
         self.sleep = 60 / self.bpm
-        
+        self.vol = 0.5
 
     def run(self):
         counter = 0
@@ -157,6 +157,8 @@ if __name__ == "__main__":
     bpm = BPMPlayer("met4th.wav","metronome.wav",120,4)
     bpm.start()
 
+    pygame.mixer.sound.set_volume(vol)
+
     tones = {
         pygame.K_UP: Note(261.626, wave="saw"),
         pygame.K_DOWN: Note(293.665, wave="saw"),
@@ -196,6 +198,14 @@ if __name__ == "__main__":
                        bpm.bpm -= 10
                 if event.key == pygame.K_b:
                     t()
+                if event.key == pygame.K_UP:
+                    if vol < 1.0
+                        vol += 0.1
+                        pygame.mixer.sound.set_volume(vol)
+                if event.key == pygame.K_DOWN:
+                    if vol > 0.0
+                        vol -= 0.1
+                        pygame.mixer.sound.set_volume(vol)
 
             # releasing key
             elif event.type == pygame.KEYUP:
