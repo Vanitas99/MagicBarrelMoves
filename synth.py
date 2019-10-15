@@ -6,7 +6,7 @@ from operator import add
 import wave
 import time
 import threading
-from pynput.keyboard import Key, Controller
+
 
 class BPMPlayer(threading.Thread):
     def __init__(self, click_file, clack_file, bpm, bpb, vol):
@@ -27,9 +27,6 @@ class BPMPlayer(threading.Thread):
             else:
                 self.click.play()
             time.sleep(self.sleep)
-
-    def bpm_change(self):
-        self._stop()
 
     def load_wav(self, click_file, clack_file):
         self.clack = pygame.mixer.Sound(clack_file)
@@ -118,31 +115,6 @@ def init_pygame():
     pygame.init()
 
 
-class ADSR():
-    def __init__(self):
-        self.attack_time = 0.01
-        self.decay_time = 0.01
-        self.release_time = 0.02
-
-        self.sustain_amplitude = 0.8
-        self.start_amplitude = 1
-
-        self.trigger_on_time = 0
-        self.trigger_off_time = 0
-
-        self.note_on = False
-
-    def get_amplitude(self):
-        pass
-
-    def note_on(self, time):
-        self.trigger_on_time = time
-        self.note_on = True
-
-    def note_off(self, time):
-        self.trigger_off_time = time
-        self.note_on = False
-
 def t():
     newevent = pygame.event.Event(pygame.KEYDOWN, unicode="q", key=pygame.K_q, mod=pygame.KMOD_NONE) #create the event
     pygame.event.post(newevent) #add the event to the queue
@@ -151,26 +123,31 @@ def tt():
     newevent = pygame.event.Event(pygame.KEYUP, unicode="q", key=pygame.K_q, mod=pygame.KMOD_NONE) #create the event
     pygame.event.post(newevent) #add the event to the queue
 
+def set_vol(tones, bpm_player, volume):
+    for tone in tones.values():
+        tone.set_volume(volume)
+    bpm_player.clack.set_volume(vol)
+    bpm_player.click.set_volume(vol)
 
 if __name__ == "__main__":
     init_pygame()
-    bpm = BPMPlayer("met4th.wav","metronome.wav",120,4)
+    bpm = BPMPlayer("met4th.wav","metronome.wav",120,4, 1)
     bpm.start()
 
-    pygame.mixer.sound.set_volume(vol)
-
-    tones = {
-        pygame.K_UP: Note(261.626, wave="saw"),
-        pygame.K_DOWN: Note(293.665, wave="saw"),
-        pygame.K_LEFT: Note(329.628, wave="saw"),
-        pygame.K_RIGHT: Note(349.228, wave="saw"),
-        pygame.K_t: Note(391.995, wave="saw"),
-        pygame.K_z: Note(440.000, wave="saw"),
-        pygame.K_u: Note(493.883, wave="saw"),
-        pygame.K_i: Note(523.251, wave="saw")
-    }
+    vol = 1
 
     running = True
+    tones = {
+        pygame.K_w: Note(261.626, wave="sin"),
+        pygame.K_a: Note(293.665, wave="sin"),
+        pygame.K_s: Note(329.628, wave="sin"),
+        pygame.K_d: Note(349.228, wave="sin"),
+        pygame.K_f: Note(391.995, wave="sin"),
+        pygame.K_g: Note(440.000, wave="sin"),
+        pygame.K_u: Note(493.883, wave="sin"),
+        pygame.K_i: Note(523.251, wave="sin")
+    }
+    
   
     (width, height) = (300, 200)
     screen = pygame.display.set_mode((width, height))
@@ -188,24 +165,24 @@ if __name__ == "__main__":
                     print('press:', event.key)
                     tones[event.key].fadeout(50)
                     tones[event.key].play(-1)
-                if event.key == pygame.K_n:
-                    print("SPEED UP :D")
+                if event.key == pygame.K_RIGHT:
+                    print("BPM: %d" % bpm.bpm)
                     if bpm.bpm <= 400: #limiting fastest speed
                        bpm.bpm += 10
-                if event.key == pygame.K_m:
-                    print("SLOW DOWN D:")
+                if event.key == pygame.K_LEFT:
+                    print("BPM: %d" % bpm.bpm)
                     if bpm.bpm > 10:  #limiting slowest speed
                        bpm.bpm -= 10
-                if event.key == pygame.K_b:
-                    t()
                 if event.key == pygame.K_UP:
-                    if vol < 1.0
+                    if vol < 1.0:
                         vol += 0.1
-                        pygame.mixer.sound.set_volume(vol)
+                        set_vol(tones,bpm,vol)
+                        print("Volume: %.1f" % vol)
                 if event.key == pygame.K_DOWN:
-                    if vol > 0.0
+                    if vol > 0.0:
                         vol -= 0.1
-                        pygame.mixer.sound.set_volume(vol)
+                        set_vol(tones, bpm, vol)
+                        print("Volume: %.1f" % vol)
 
             # releasing key
             elif event.type == pygame.KEYUP:
