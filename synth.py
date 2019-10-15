@@ -158,24 +158,20 @@ if __name__ == "__main__":
     bpm.start()
 
     tones = {
-        pygame.K_q: Note(261.626, wave="square"),
-        pygame.K_w: Note(293.665, wave="square"),
-        pygame.K_e: Note(329.628, wave="square"),
-        pygame.K_r: Note(349.228, wave="square"),
-        pygame.K_t: Note(391.995, wave="square"),
-        pygame.K_z: Note(440.000, wave="square"),
-        pygame.K_u: Note(493.883, wave="square"),
-        pygame.K_i: Note(523.251, wave="square")
-    }
-
-    chords = {
-
+        pygame.K_UP: Note(261.626, wave="saw"),
+        pygame.K_DOWN: Note(293.665, wave="saw"),
+        pygame.K_LEFT: Note(329.628, wave="saw"),
+        pygame.K_RIGHT: Note(349.228, wave="saw"),
+        pygame.K_t: Note(391.995, wave="saw"),
+        pygame.K_z: Note(440.000, wave="saw"),
+        pygame.K_u: Note(493.883, wave="saw"),
+        pygame.K_i: Note(523.251, wave="saw")
     }
 
     running = True
   
-    a = Note(329.628, wave="square")
-    b = Note(391.995, wave="square")
+    (width, height) = (300, 200)
+    screen = pygame.display.set_mode((width, height))
 
     while running:
         for event in pygame.event.get():
@@ -190,10 +186,10 @@ if __name__ == "__main__":
                     print('press:', event.key)
                     tones[event.key].fadeout(50)
                     tones[event.key].play(-1)
-                if event.key == pygame.K_UP:
+                if event.key == pygame.K_n:
                     print("SPEED UP :D")
                     bpm.bpm += 10
-                if event.key == pygame.K_DOWN:
+                if event.key == pygame.K_m:
                     print("SLOW DOWN D:")
                     bpm.bpm -= 10
                 if event.key == pygame.K_b:
