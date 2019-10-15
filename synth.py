@@ -188,10 +188,12 @@ if __name__ == "__main__":
                     tones[event.key].play(-1)
                 if event.key == pygame.K_n:
                     print("SPEED UP :D")
-                    bpm.bpm += 10
+                    if bpm.bpm <= 400: #limiting fastest speed
+                       bpm.bpm += 10
                 if event.key == pygame.K_m:
                     print("SLOW DOWN D:")
-                    bpm.bpm -= 10
+                    if bpm.bpm > 10:  #limiting slowest speed
+                       bpm.bpm -= 10
                 if event.key == pygame.K_b:
                     t()
 
