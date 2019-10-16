@@ -8,6 +8,15 @@ import time
 import threading
 
 
+class DrumKit():
+
+    def __init__(self, vol):
+        self.vol = vol
+        self.kick = pygame.mixer.Sound("bassdrum.wav")
+        self.snare = pygame.mixer.Sound("snare.wav")
+    
+
+
 class BPMPlayer(threading.Thread):
     def __init__(self, click_file, clack_file, bpm, bpb, vol):
         threading.Thread.__init__(self)
@@ -129,26 +138,30 @@ def set_vol(tones, bpm_player, volume):
     bpm_player.clack.set_volume(vol)
     bpm_player.click.set_volume(vol)
 
+
 if __name__ == "__main__":
     init_pygame()
+    drums = DrumKit(1)
     bpm = BPMPlayer("met4th.wav","metronome.wav",120,4, 1)
     bpm.start()
 
-    sound_bass = pygame.mixer.Sound("bassdrum.wav")
-    sound_snare = pygame.mixer.Sound("snare.wav")
+    #sound_bass = pygame.mixer.Sound("bassdrum.wav")
+    #sound_snare = pygame.mixer.Sound("snare.wav")
 
     vol = 1
 
     running = True
     tones = {
-        pygame.K_w: Note(261.626, wave="sin"),
-        pygame.K_a: Note(293.665, wave="sin"),
-        pygame.K_s: Note(329.628, wave="sin"),
-        pygame.K_d: Note(349.228, wave="sin"),
-        pygame.K_f: Note(391.995, wave="sin"),
-        pygame.K_g: Note(440.000, wave="sin"),
-        pygame.K_u: Note(493.883, wave="sin"),
-        pygame.K_i: Note(523.251, wave="sin")
+        pygame.K_w: Note(261.626, wave="saw"),
+        pygame.K_a: Note(293.665, wave="saw"),
+        pygame.K_s: Note(329.628, wave="saw"),
+        pygame.K_d: Note(349.228, wave="saw"),
+        pygame.K_f: Note(391.995, wave="saw"),
+        pygame.K_g: Note(440.000, wave="saw"),
+        pygame.K_u: Note(493.883, wave="saw"),
+        pygame.K_i: Note(523.251, wave="saw"),
+        pygame.K_SPACE: drums.kick,
+        pygame.MOUSEBUTTONDOWN: drums.snare
     }
     
   
@@ -186,9 +199,7 @@ if __name__ == "__main__":
                         vol -= 0.1
                         set_vol(tones, bpm, vol)
                         print("Volume: %.1f" % vol)
-                if event.key == pygame.K_SPACE:
-                    pygame.mixer.Sound.play(sound_snare)
-
+                
             # releasing key
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_b:
@@ -197,7 +208,7 @@ if __name__ == "__main__":
                     print('release:', event.key)
                     tones[event.key].stop()
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                pygame.mixer.Sound.play(sound_bass)
+                tones[event.type].play()
 
     pygame.quit()
 
