@@ -134,6 +134,9 @@ if __name__ == "__main__":
     bpm = BPMPlayer("met4th.wav","metronome.wav",120,4, 1)
     bpm.start()
 
+    sound_bass = pygame.mixer.Sound("bassdrum.wav")
+    sound_snare = pygame.mixer.Sound("snare.wav")
+
     vol = 1
 
     running = True
@@ -183,6 +186,8 @@ if __name__ == "__main__":
                         vol -= 0.1
                         set_vol(tones, bpm, vol)
                         print("Volume: %.1f" % vol)
+                if event.key == pygame.K_SPACE:
+                    pygame.mixer.Sound.play(sound_snare)
 
             # releasing key
             elif event.type == pygame.KEYUP:
@@ -191,7 +196,8 @@ if __name__ == "__main__":
                 if event.key in tones:
                     print('release:', event.key)
                     tones[event.key].stop()
-                    
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                pygame.mixer.Sound.play(sound_bass)
 
     pygame.quit()
 
