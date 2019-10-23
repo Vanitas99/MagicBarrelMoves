@@ -14,6 +14,8 @@ class DrumKit():
         self.vol = vol
         self.kick = pygame.mixer.Sound("bassdrum.wav")
         self.snare = pygame.mixer.Sound("snare.wav")
+        self.hat = pygame.mixer.Sound("hat.wav")
+        self.clap = pygame.mixer.Sound("clap.wav")
     
 
 
@@ -157,16 +159,20 @@ if __name__ == "__main__":
         pygame.K_s: Note(329.628, wave="saw"),
         pygame.K_d: Note(349.228, wave="saw"),
         pygame.K_f: Note(391.995, wave="saw"),
-        pygame.K_g: Note(440.000, wave="saw"),
-        pygame.K_u: Note(493.883, wave="saw"),
-        pygame.K_i: Note(523.251, wave="saw"),
-        pygame.K_SPACE: drums.kick,
-        pygame.MOUSEBUTTONDOWN: drums.snare
+        # pygame.K_g: Note(440.000, wave="saw"),
+        # pygame.K_u: Note(493.883, wave="saw"),
+        # pygame.K_i: Note(523.251, wave="saw"),
+        pygame.K_LEFT: drums.kick,
+        pygame.K_RIGHT: drums.snare,
+        pygame.K_UP: drums.hat,
+        pygame.K_DOWN: drums.clap
+
     }
-    
-  
+
     (width, height) = (300, 200)
     screen = pygame.display.set_mode((width, height))
+
+    flag = False
 
     while running:
         for event in pygame.event.get():
@@ -177,38 +183,47 @@ if __name__ == "__main__":
 
             # pressing key
             elif event.type == pygame.KEYDOWN:
+
+                if event.key == pygame.K_SPACE:
+                    flag = True
+
                 if event.key in tones:
                     print('press:', event.key)
-                    tones[event.key].fadeout(50)
-                    tones[event.key].play(-1)
-                if event.key == pygame.K_RIGHT:
-                    print("BPM: %d" % bpm.bpm)
-                    if bpm.bpm <= 400: #limiting fastest speed
-                       bpm.bpm += 10
-                if event.key == pygame.K_LEFT:
-                    print("BPM: %d" % bpm.bpm)
-                    if bpm.bpm > 10:  #limiting slowest speed
-                       bpm.bpm -= 10
-                if event.key == pygame.K_UP:
-                    if vol < 1.0:
-                        vol += 0.1
-                        set_vol(tones,bpm,vol)
-                        print("Volume: %.1f" % vol)
-                if event.key == pygame.K_DOWN:
-                    if vol > 0.0:
-                        vol -= 0.1
-                        set_vol(tones, bpm, vol)
-                        print("Volume: %.1f" % vol)
-                
+                    if isinstance(tones[event.key], Note):
+                        tones[event.key].play(-1)
+                    else:
+                        if not flag:
+                            tones[event.key].play()
+
+                if flag:
+                    if event.key == pygame.K_RIGHT:
+                        print("BPM: %d" % bpm.bpm)
+                        if bpm.bpm <= 400: #limiting fastest speed
+                            bpm.bpm += 10
+                    if event.key == pygame.K_LEFT:
+                        print("BPM: %d" % bpm.bpm)
+                        if bpm.bpm > 10:  #limiting slowest speed
+                           bpm.bpm -= 10
+                    if event.key == pygame.K_UP:
+                        if vol < 1.0:
+                            vol += 0.1
+                            set_vol(tones,bpm,vol)
+                            print("Volume: %.1f" % vol)
+                    if event.key == pygame.K_DOWN:
+                        if vol > 0.0:
+                            vol -= 0.1
+                            set_vol(tones, bpm, vol)
+                            print("Volume: %.1f" % vol)
+
             # releasing key
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_b:
-                    tt()
+                if event.key == pygame.K_SPACE:
+                    flag = False
                 if event.key in tones:
                     print('release:', event.key)
                     tones[event.key].stop()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                tones[event.type].play()
+
 
     pygame.quit()
 
+0
