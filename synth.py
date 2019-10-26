@@ -126,12 +126,12 @@ def init_pygame():
     pygame.init()
 
 
-def t():
-    newevent = pygame.event.Event(pygame.KEYDOWN, unicode="q", key=pygame.K_q, mod=pygame.KMOD_NONE) #create the event
+def post_play():
+    newevent = pygame.event.Event(pygame.KEYDOWN, unicode="w", key=pygame.K_w, mod=pygame.KMOD_NONE) #create the event
     pygame.event.post(newevent) #add the event to the queue
 
-def tt():
-    newevent = pygame.event.Event(pygame.KEYUP, unicode="q", key=pygame.K_q, mod=pygame.KMOD_NONE) #create the event
+def post_stop():
+    newevent = pygame.event.Event(pygame.KEYUP, unicode="w", key=pygame.K_w, mod=pygame.KMOD_NONE) #create the event
     pygame.event.post(newevent) #add the event to the queue
 
 def set_vol(tones, bpm_player, volume):
@@ -143,31 +143,39 @@ def set_vol(tones, bpm_player, volume):
 
 if __name__ == "__main__":
     init_pygame()
-    drums = DrumKit(1)
-    bpm = BPMPlayer("met4th.wav","metronome.wav",120,4, 1)
-    bpm.start()
+    #drums = DrumKit(1)
+    #bpm = BPMPlayer("met4th.wav","metronome.wav",120,4, 1)
+    #bpm.start()
 
     #sound_bass = pygame.mixer.Sound("bassdrum.wav")
     #sound_snare = pygame.mixer.Sound("snare.wav")
 
+    distance = 0
+
+   
     vol = 1
 
     running = True
     tones = {
-        pygame.K_w: Note(261.626, wave="saw"),
-        pygame.K_a: Note(293.665, wave="saw"),
-        pygame.K_s: Note(329.628, wave="saw"),
-        pygame.K_d: Note(349.228, wave="saw"),
-        pygame.K_f: Note(391.995, wave="saw"),
-        # pygame.K_g: Note(440.000, wave="saw"),
+        #pygame.K_w: Note(261.626, wave="square"),
+        #pygame.K_a: Note(293.665, wave="square"),
+        #pygame.K_s: Note(329.628, wave="square"),
+        #pygame.K_d: Note(349.228, wave="square"),
+        #pygame.K_f: Note(391.995, wave="square"),
+        #pygame.K_g: Note(440.000, wave="saw"),
         # pygame.K_u: Note(493.883, wave="saw"),
         # pygame.K_i: Note(523.251, wave="saw"),
-        pygame.K_LEFT: drums.kick,
-        pygame.K_RIGHT: drums.snare,
-        pygame.K_UP: drums.hat,
-        pygame.K_DOWN: drums.clap
+        #pygame.K_LEFT: drums.kick,
+        #pygame.K_RIGHT: drums.snare,
+        #pygame.K_UP: drums.hat,
+        #pygame.K_DOWN: drums.clap
 
     }
+    
+    #tone_array = [Note(260,wave="square")]
+    sensor_thread = threading.Thread(target = calculate_distance) 
+    sensor_thread.start()
+    
 
     (width, height) = (300, 200)
     screen = pygame.display.set_mode((width, height))
@@ -175,6 +183,7 @@ if __name__ == "__main__":
     flag = False
 
     while running:
+    
         for event in pygame.event.get():
 
             # closing window
@@ -225,5 +234,4 @@ if __name__ == "__main__":
 
 
     pygame.quit()
-
-0
+    GPIO.cleanup()
