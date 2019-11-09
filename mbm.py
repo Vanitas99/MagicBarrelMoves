@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from synth import *
 import RPi.GPIO as GPIO
 import time
