@@ -178,7 +178,7 @@ if __name__ == "__main__":
     
 
     (width, height) = (300, 200)
-    screen = pygame.display.set_mode((width, height))
+    screen = pygame.display.set_mode((width, height), FULLSCREEN)
 
     flag = False
 
