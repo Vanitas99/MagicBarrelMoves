@@ -64,7 +64,7 @@ class Chord(pygame.mixer.Sound):
 
 
 class Note(pygame.mixer.Sound):
-    def __init__(self,frequency, volume = .3, wave="sin"):
+    def __init__(self,frequency, volume = .3, wave="square"):
         self.frequency = frequency
         self.vol = volume
         wave_forms = {
@@ -88,7 +88,7 @@ class Note(pygame.mixer.Sound):
                 samples[time] = int(self.vol * amplitude)
             else:
                 samples[time] = int(self.vol * -amplitude)
-    
+
         return samples
 
     def build_sinwave_samples(self, overtones = 1):
@@ -96,16 +96,16 @@ class Note(pygame.mixer.Sound):
         samples = array.array("h", [0] * period)
         for time in range(period):
             samples[time] = int( self.vol * (np.sin(overtones * self.w(self.frequency) * time / 44100)/  overtones * 32767))
-            print("%d -> sample nr %d" % (samples[time], time))
+            #print("%d -> sample nr %d" % (samples[time], time))
         return samples
-    
+
     def osc(self):
         period = int(round(pygame.mixer.get_init()[0] / self.frequency))
         samples = array.array("h", [0] * period)
         for time in range(period):
             samples[time] = int( self.vol * (np.sin(self.w(self.frequency) * time / 44100 
                 + 1 * self.frequency * np.sin(self.w(10))*time/44100))  * 32767)
-            print("%d -> sample nr %d" % (samples[time], time))
+            #print("%d -> sample nr %d" % (samples[time], time))
         return samples
 
     def build_sawwave_samples(self):
