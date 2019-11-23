@@ -9,7 +9,7 @@ import sys
 from KY040 import KY040
 
 pid = str(os.getpid())
-f = open('mbm.pid','w')
+f = open('/mbm.pid','w')
 f.write(pid)
 f.close()
 
@@ -154,7 +154,7 @@ if __name__ == '__main__':
     
     # Init Pygame module
     sy.init_pygame()
-    screen = pygame.display.set_mode( (1,1 ) )
+    screen = pygame.display.set_mode(  (320,320))
     
     pygame.mixer.Sound("Intro-_Sound_.wav").play()
     time.sleep(6)
