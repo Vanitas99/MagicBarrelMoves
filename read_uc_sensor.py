@@ -86,32 +86,32 @@ def read_from_sensor(stop):
         if stop():
             break
         distanz = entfernung()
-        #print ("Distanz = %d cm" % distanz)
+        print ("Distanz = %d cm" % distanz)
         time.sleep(0.05)
-
+        skrt = 7
         # Je nach Länge des IRL Moduls, werden Noten relativ zur Gesamtlänge gespielt
-        if(distanz>=0 and distanz <= 1*threshold):
+        if(distanz>=skrt and distanz <= skrt+1*threshold):
             if playing_indx != 0:
                 switch_playing_note(0)
-        elif(distanz > 1*threshold and distanz <= 2*threshold):
+        elif(distanz > skrt+1*threshold and distanz <= skrt+2*threshold):
             if playing_indx != 1:
                 switch_playing_note(1)
-        elif(distanz > 2*threshold and distanz <= 3*threshold):
+        elif(distanz > skrt+2*threshold and distanz <= skrt+3*threshold):
             if playing_indx != 2:
                 switch_playing_note(2)
-        elif(distanz > 3*threshold and distanz <= 4*threshold):
+        elif(distanz > skrt+3*threshold and distanz <= skrt+4*threshold):
             if playing_indx != 3:
                 switch_playing_note(3)
-        elif(distanz > 4*threshold and distanz <= 5*threshold):
+        elif(distanz > skrt+4*threshold and distanz <= skrt+5*threshold):
             if playing_indx != 4:
                 switch_playing_note(4)
-        elif(distanz > 5*threshold and distanz <= 6*threshold):
+        elif(distanz > skrt+5*threshold and distanz <= skrt+6*threshold):
             if playing_indx != 5:
                 switch_playing_note(5)
-        elif(distanz > 6*threshold and distanz <= 7*threshold):
+        elif(distanz > skrt+6*threshold and distanz <= skrt+7*threshold):
             if playing_indx != 6:
                 switch_playing_note(6)
-        elif(distanz > 7*threshold and distanz <= 8*threshold):
+        elif(distanz > skrt+7*threshold and distanz <= skrt+8*threshold):
             if playing_indx != 7:
                 switch_playing_note(7)
         else:

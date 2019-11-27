@@ -1,7 +1,8 @@
 #!/bin/sh
 # launcher_mbm.sh
 
-cd /home/pi/Code/MagicBarrelMoves/
+cd /
+cd /home/pi/MagicBArrelMoves/
 
-python start.py
+sudo python start.py
 

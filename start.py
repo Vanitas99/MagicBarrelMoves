@@ -26,7 +26,7 @@ try:
           f.close()
           print(pid )
           try:
-             os.system("sudo kill -9 " +  pid)
+             os.system("sudo pkill -9 -f read_uc_sensor.py")
              print("Killing Process: %s\n" % pid)
           except OSError:
              print("Error Killing Process")
@@ -35,7 +35,7 @@ try:
        else:
           os.system("sudo python3 read_uc_sensor.py & 1")
           running = True
-       time.sleep(1)
+       time.sleep(2)
        
 except KeyboardInterrupt:
     GPIO.cleanup()       # clean up GPIO on CTRL+C exit
