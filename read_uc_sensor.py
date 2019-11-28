@@ -138,10 +138,10 @@ if __name__ == '__main__':
     def rotary_change(direction):
         if direction == 1:
             if bpm_player.bpm < 400:
-                bpm_player.bpm += 10
+                bpm_player.bpm -= 10
         else:
             if bpm_player.bpm > 10:
-                bpm_player.bpm -= 10
+                bpm_player.bpm += 10
            
         print("Bpm %d" % bpm_player.bpm)
     
