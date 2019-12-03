@@ -1,8 +1,6 @@
 #!/bin/sh
 # launcher_mbm.sh
 
-cd /
-cd /home/pi/MagicBArrelMoves/
 
-sudo python start.py
+sudo python3 /home/pi/MagicBarrelMoves/read_uc_sensor.py
 

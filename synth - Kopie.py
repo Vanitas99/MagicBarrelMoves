@@ -18,17 +18,6 @@ class DrumKit():
         self.clap = pygame.mixer.Sound("clap.wav")
     
 
-class Organ():
-    def __init__(self, vol):
-        self.vol = vol
-        self.c1 = pygame.mixer.Sound("organ_c1.wav")
-        self.d = pygame.mixer.Sound("organ_d.wav")
-        self.e = pygame.mixer.Sound("organ_e.wav")
-        self.f = pygame.mixer.Sound("organ_f.wav")
-        self.g = pygame.mixer.Sound("organ_g.wav")
-        self.a = pygame.mixer.Sound("organ_a.wav")
-        self.h = pygame.mixer.Sound("organ_h.wav")
-        self.c2 = pygame.mixer.Sound("organ_c2.wav")
 
 class BPMPlayer(threading.Thread):
     def __init__(self, click_file, clack_file, bpm, bpb, vol):

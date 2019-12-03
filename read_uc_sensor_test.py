@@ -1,12 +1,12 @@
 # coding=UTF-8
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 import time
 import pygame
 import synth as sy
 import threading
 import os
 import sys
-from KY040 import KY040
+#from KY040 import KY040
 
 pid = str(os.getpid())
 f = open('/mbm.pid','w')
@@ -15,11 +15,11 @@ f.close()
 
 
 #GPIO definieren (Modus, Pins, Output)
-GPIO.setmode(GPIO.BCM)
-GPIO_TRIGGER = 18
-GPIO_ECHO = 24
-GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
-GPIO.setup(GPIO_ECHO, GPIO.IN)
+#GPIO.setmode(GPIO.BCM)
+#GPIO_TRIGGER = 18
+#GPIO_ECHO = 24
+#GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
+#GPIO.setup(GPIO_ECHO, GPIO.IN)
 
 CLOCKPIN = 5
 DATAPIN = 6
@@ -85,7 +85,8 @@ def read_from_sensor(stop):
 
         if stop():
             break
-        distanz = entfernung()
+        #distanz = entfernung()
+        distanz = 38
         print ("Distanz = %d cm" % distanz)
         time.sleep(0.05)
         skrt = 7
@@ -161,16 +162,26 @@ if __name__ == '__main__':
     
     # DrumKit aus synth.py initialisieren
     drums = sy.DrumKit(1)
+    organ = sy.Organ(1)
     
     # Diese Noten werden vom US Sensor genutzt
-    tones = [sy.Note(261, wave="square"),
-             sy.Note(293, wave="square"),
-             sy.Note(329, wave="square"),
-             sy.Note(349, wave="square"),
-             sy.Note(392, wave="square"),
-             sy.Note(440, wave="square"),
-             sy.Note(494, wave="square"),
-             sy.Note(523, wave="square")
+#    tones = [sy.Note(261, wave="square"),
+#             sy.Note(293, wave="square"),
+#             sy.Note(329, wave="square"),
+#             sy.Note(349, wave="square"),
+#             sy.Note(392, wave="square"),
+#             sy.Note(440, wave="square"),
+#             sy.Note(494, wave="square"),
+#             sy.Note(523, wave="square")
+#            ]
+    tones = [organ.c1,
+             organ.d,
+             organ.e,
+             organ.f,
+             organ.g,
+             organ.a,
+             organ.h,
+             organ.c2,
             ]
 
     # Tasteninputs vom Makey makey auf Drumkit gemapt
