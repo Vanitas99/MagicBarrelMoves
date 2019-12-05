@@ -1,12 +1,12 @@
 # coding=UTF-8
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 import time
 import pygame
 import synth as sy
 import threading
 import os
 import sys
-from KY040 import KY040
+#from KY040 import KY040
 
 pid = str(os.getpid())
 f = open('/mbm.pid','w')
@@ -14,12 +14,12 @@ f.write(pid)
 f.close()
 
 
-GPIO definieren (Modus, Pins, Output)
-GPIO.setmode(GPIO.BCM)
-GPIO_TRIGGER = 18
-GPIO_ECHO = 24
-GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
-GPIO.setup(GPIO_ECHO, GPIO.IN)
+##GPIO definieren (Modus, Pins, Output)
+#GPIO.setmode(GPIO.BCM)
+#GPIO_TRIGGER = 18
+#GPIO_ECHO = 24
+#GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
+#GPIO.setup(GPIO_ECHO, GPIO.IN)
 
 CLOCKPIN = 5
 DATAPIN = 6
@@ -85,8 +85,8 @@ def read_from_sensor(stop):
 
         if stop():
             break
-        distanz = entfernung()
-        #distanz = 38
+        #distanz = entfernung()
+        distanz = 6
         print ("Distanz = %d cm" % distanz)
         time.sleep(0.05)
         skrt = 7
@@ -201,7 +201,8 @@ if __name__ == '__main__':
     threshold = length_module_irl / len(tones)
 
     # BPM Player aus synth.py initialisieren
-    bpm_player = sy.BPMPlayer("met4th.wav","metronome.wav",120,4,1)
+    #bpm_player = sy.BPMPlayer("met4th.wav","metronome.wav",120,4,1)
+    bpm_player = sy.DrumLooper("drumloop_1.wav","drumloop_2.wav","drumloop_3.wav","drumloop_4.wav",120,4,1)
     bpm_player.start()
     
 

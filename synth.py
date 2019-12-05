@@ -6,6 +6,7 @@ from operator import add
 import wave
 import time
 import threading
+import random
 
 
 class DrumKit():
@@ -54,7 +55,33 @@ class BPMPlayer(threading.Thread):
         self.clack = pygame.mixer.Sound(clack_file)
         self.click = pygame.mixer.Sound(click_file)
 
-    
+class DrumLooper(threading.Thread):
+    def __init__(self, dl1_file, dl2_file, dl3_file, dl4_file, bpm, bpb, vol):
+        threading.Thread.__init__(self)
+        self.load_wav(dl1_file, dl2_file, dl3_file, dl4_file)
+        self.bpm = bpm
+        self.bpb = bpb
+        self.sleep = (60 / self.bpm)*4
+        self.vol = 0.5
+
+    def run(self):
+        while True:
+            rnd = random.randint(0,3)
+            if rnd == 0:
+                self.dl1.play()
+            elif rnd == 1:
+                self.dl2.play()
+            elif rnd == 2:
+                self.dl3.play()
+            elif rnd == 3:
+                self.dl4.play()
+            time.sleep(self.sleep)
+
+    def load_wav(self, dl1_file, dl2_file, dl3_file, dl4_file):
+        self.dl1 = pygame.mixer.Sound(dl1_file)
+        self.dl2 = pygame.mixer.Sound(dl2_file)
+        self.dl3 = pygame.mixer.Sound(dl3_file)
+        self.dl4 = pygame.mixer.Sound(dl4_file)
 
 class Chord(pygame.mixer.Sound):
     def __init__(self , volume = 1, **chord):
