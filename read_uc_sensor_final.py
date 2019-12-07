@@ -138,10 +138,10 @@ if __name__ == '__main__':
     # BPM entsprechend der Drehrichtung des Reglers anpassen
     def rotary_change(direction):
         if direction == 1:
-            if bpm_player.bpm < 400:
+            if bpm_player.bpm < 140:
                 bpm_player.bpm += 10
         else:
-            if bpm_player.bpm > 10:
+            if bpm_player.bpm > 70:
                 bpm_player.bpm -= 10
            
         print("Bpm %d" % bpm_player.bpm)
@@ -162,18 +162,10 @@ if __name__ == '__main__':
     
     # DrumKit aus synth.py initialisieren
     drums = sy.DrumKit(1)
+    chords = sy.Chords(1)
     organ = sy.Organ(1)
     
     # Diese Noten werden vom US Sensor genutzt
-#    tones = [sy.Note(261, wave="square"),
-#             sy.Note(293, wave="square"),
-#             sy.Note(329, wave="square"),
-#             sy.Note(349, wave="square"),
-#             sy.Note(392, wave="square"),
-#             sy.Note(440, wave="square"),
-#             sy.Note(494, wave="square"),
-#             sy.Note(523, wave="square")
-#            ]
     tones = [organ.c1,
              organ.d,
              organ.e,
@@ -185,10 +177,15 @@ if __name__ == '__main__':
             ]
 
     # Tasteninputs vom Makey makey auf Drumkit gemapt
-    perc = {pygame.K_w: drums.hat,
-            pygame.K_a: drums.kick,
-            pygame.K_s: drums.clap,
-            pygame.K_d: drums.snare
+#    perc = {pygame.K_w: drums.hat,
+#            pygame.K_a: drums.kick,
+#            pygame.K_s: drums.clap,
+#            pygame.K_d: drums.snare
+#           }
+    perc = {pygame.K_w: chords.am,
+            pygame.K_a: chords.f,
+            pygame.K_s: chords.c,
+            pygame.K_d: chords.g
            }
     
     running = True
@@ -202,7 +199,7 @@ if __name__ == '__main__':
 
     # BPM Player aus synth.py initialisieren
     #bpm_player = sy.BPMPlayer("met4th.wav","metronome.wav",120,4,1)
-    bpm_player = sy.DrumLooper("drumloop_1.wav","drumloop_2.wav","drumloop_3.wav","drumloop_4.wav",120,4,1)
+    bpm_player = sy.DrumLooper(110,4,1)
     bpm_player.start()
     
 

@@ -17,19 +17,28 @@ class DrumKit():
         self.snare = pygame.mixer.Sound("snare.wav")
         self.hat = pygame.mixer.Sound("hat.wav")
         self.clap = pygame.mixer.Sound("clap.wav")
-    
+
+class Chords():
+
+    def __init__(self, vol):
+        self.vol = vol
+        self.am = pygame.mixer.Sound("chords/chord_am.wav")
+        self.f = pygame.mixer.Sound("chords/chord_f.wav")
+        self.c = pygame.mixer.Sound("chords/chord_c.wav")
+        self.g = pygame.mixer.Sound("chords/chord_g.wav")
+
 
 class Organ():
     def __init__(self, vol):
         self.vol = vol
-        self.c1 = pygame.mixer.Sound("organ_c1.wav")
-        self.d = pygame.mixer.Sound("organ_d.wav")
-        self.e = pygame.mixer.Sound("organ_e.wav")
-        self.f = pygame.mixer.Sound("organ_f.wav")
-        self.g = pygame.mixer.Sound("organ_g.wav")
-        self.a = pygame.mixer.Sound("organ_a.wav")
-        self.h = pygame.mixer.Sound("organ_h.wav")
-        self.c2 = pygame.mixer.Sound("organ_c2.wav")
+        self.c1 = pygame.mixer.Sound("organ/organ_c1.wav")
+        self.d = pygame.mixer.Sound("organ/organ_d.wav")
+        self.e = pygame.mixer.Sound("organ/organ_e.wav")
+        self.f = pygame.mixer.Sound("organ/organ_f.wav")
+        self.g = pygame.mixer.Sound("organ/organ_g.wav")
+        self.a = pygame.mixer.Sound("organ/organ_a.wav")
+        self.h = pygame.mixer.Sound("organ/organ_h.wav")
+        self.c2 = pygame.mixer.Sound("organ/organ_c2.wav")
 
 class BPMPlayer(threading.Thread):
     def __init__(self, click_file, clack_file, bpm, bpb, vol):
@@ -56,9 +65,9 @@ class BPMPlayer(threading.Thread):
         self.click = pygame.mixer.Sound(click_file)
 
 class DrumLooper(threading.Thread):
-    def __init__(self, dl1_file, dl2_file, dl3_file, dl4_file, bpm, bpb, vol):
+    def __init__(self, bpm, bpb, vol):
         threading.Thread.__init__(self)
-        self.load_wav(dl1_file, dl2_file, dl3_file, dl4_file)
+        self.load_wav()
         self.bpm = bpm
         self.bpb = bpb
         self.sleep = (60 / self.bpm)*4
@@ -66,22 +75,90 @@ class DrumLooper(threading.Thread):
 
     def run(self):
         while True:
-            rnd = random.randint(0,3)
-            if rnd == 0:
-                self.dl1.play()
-            elif rnd == 1:
-                self.dl2.play()
-            elif rnd == 2:
-                self.dl3.play()
-            elif rnd == 3:
-                self.dl4.play()
+            rnd = random.randint(0,2)
+            if self.bpm == 70:
+                if rnd == 0:
+                    self.dl1_70.play()
+                if rnd == 1:
+                    self.dl2_70.play()
+                if rnd == 2:
+                    self.dl3_70.play()
+            if self.bpm == 80:
+                if rnd == 0:
+                    self.dl1_80.play()
+                if rnd == 1:
+                    self.dl2_80.play()
+                if rnd == 2:
+                    self.dl3_80.play()
+            if self.bpm == 90:
+                if rnd == 0:
+                    self.dl1_90.play()
+                if rnd == 1:
+                    self.dl2_90.play()
+                if rnd == 2:
+                    self.dl3_90.play()
+            if self.bpm == 100:
+                if rnd == 0:
+                    self.dl1_100.play()
+                if rnd == 1:
+                    self.dl2_100.play()
+                if rnd == 2:
+                    self.dl3_100.play()
+            if self.bpm == 110:
+                if rnd == 0:
+                    self.dl1_110.play()
+                if rnd == 1:
+                    self.dl2_110.play()
+                if rnd == 2:
+                    self.dl3_110.play()
+            if self.bpm == 120:
+                if rnd == 0:
+                    self.dl1_120.play()
+                if rnd == 1:
+                    self.dl2_120.play()
+                if rnd == 2:
+                    self.dl3_120.play()
+            if self.bpm == 130:
+                if rnd == 0:
+                    self.dl1_130.play()
+                if rnd == 1:
+                    self.dl2_130.play()
+                if rnd == 2:
+                    self.dl3_130.play()
+            if self.bpm == 140:
+                if rnd == 0:
+                    self.dl1_140.play()
+                if rnd == 1:
+                    self.dl2_140.play()
+                if rnd == 2:
+                    self.dl3_140.play()
             time.sleep(self.sleep)
 
-    def load_wav(self, dl1_file, dl2_file, dl3_file, dl4_file):
-        self.dl1 = pygame.mixer.Sound(dl1_file)
-        self.dl2 = pygame.mixer.Sound(dl2_file)
-        self.dl3 = pygame.mixer.Sound(dl3_file)
-        self.dl4 = pygame.mixer.Sound(dl4_file)
+    def load_wav(self):
+        self.dl1_70 = pygame.mixer.Sound("drumloops/dl1_70.wav")
+        self.dl1_80 = pygame.mixer.Sound("drumloops/dl1_80.wav")
+        self.dl1_90 = pygame.mixer.Sound("drumloops/dl1_90.wav")
+        self.dl1_100 = pygame.mixer.Sound("drumloops/dl1_100.wav")
+        self.dl1_110 = pygame.mixer.Sound("drumloops/dl1_110.wav")
+        self.dl1_120 = pygame.mixer.Sound("drumloops/dl1_120.wav")
+        self.dl1_130 = pygame.mixer.Sound("drumloops/dl1_130.wav")
+        self.dl1_140 = pygame.mixer.Sound("drumloops/dl1_140.wav")
+        self.dl2_70 = pygame.mixer.Sound("drumloops/dl2_70.wav")
+        self.dl2_80 = pygame.mixer.Sound("drumloops/dl2_80.wav")
+        self.dl2_90 = pygame.mixer.Sound("drumloops/dl2_90.wav")
+        self.dl2_100 = pygame.mixer.Sound("drumloops/dl2_100.wav")
+        self.dl2_110 = pygame.mixer.Sound("drumloops/dl2_110.wav")
+        self.dl2_120 = pygame.mixer.Sound("drumloops/dl2_120.wav")
+        self.dl2_130 = pygame.mixer.Sound("drumloops/dl2_130.wav")
+        self.dl2_140 = pygame.mixer.Sound("drumloops/dl2_140.wav")
+        self.dl3_70 = pygame.mixer.Sound("drumloops/dl3_70.wav")
+        self.dl3_80 = pygame.mixer.Sound("drumloops/dl3_80.wav")
+        self.dl3_90 = pygame.mixer.Sound("drumloops/dl3_90.wav")
+        self.dl3_100 = pygame.mixer.Sound("drumloops/dl3_100.wav")
+        self.dl3_110 = pygame.mixer.Sound("drumloops/dl3_110.wav")
+        self.dl3_120 = pygame.mixer.Sound("drumloops/dl3_120.wav")
+        self.dl3_130 = pygame.mixer.Sound("drumloops/dl3_130.wav")
+        self.dl3_140 = pygame.mixer.Sound("drumloops/dl3_140.wav")
 
 class Chord(pygame.mixer.Sound):
     def __init__(self , volume = 1, **chord):
